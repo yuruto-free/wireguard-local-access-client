@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+    networks:
+      backbone:
+        ipv4_address: 10.0.20.2
+    volumes:
+      - /lib/modules:/lib/modules
+      - ./config:/config
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  backbone:
+    name: backbone
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.20.0/24

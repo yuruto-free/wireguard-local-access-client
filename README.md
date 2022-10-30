@@ -109,10 +109,10 @@ The correspondence between the subnet in the LAN, the IP address of the DNS serv
 In addition, the following command must be added to `conf.up.d` and `conf.down.d` if a DNS server in the LAN is used.
 
 ```sh
-# conf.up.d/02-routing-lan-access.conf
+# conf.up.d/01-routing-lan-access.conf
 iptables -t nat -A PREROUTING -p udp --dport 53 -j DNAT --to-destination 192.168.11.3:53
 
-# conf.down.d/02-routing-lan-access.conf
+# conf.down.d/01-routing-lan-access.conf
 iptables -t nat -D PREROUTING -p udp --dport 53 -j DNAT --to-destination 192.168.11.3:53
 ```
 

@@ -1,6 +1,6 @@
 ## PostUp/PostDown Sample Configuration
 ### PostUp
-1. If you want to address translate an access coming to port 80 to 192.168.0.5 in your LAN, you would register the following command.
+1. If you want to address translate an access coming to port 80 to 192.168.11.2 in your LAN, you would register the following command.
 
     ```sh
     iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.11.2:80

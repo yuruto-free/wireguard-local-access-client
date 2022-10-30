@@ -26,4 +26,3 @@ Save the following command in `conf.down.d/01-routing-lan-access.conf`.
 iptables -t nat -D PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.11.2:80
 iptables -t nat -D PREROUTING -p tcp --dport 8888 -j DNAT --to-destination 192.168.11.3:8888
 ```
-

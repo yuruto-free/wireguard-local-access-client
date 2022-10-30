@@ -4,9 +4,9 @@ PrivateKey = ABCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abc
 MTU = 1380
 DNS = 10.1.2.1
 PostUp = /config/iptables_script/postup.sh
-PostUp = iptables -t nat -A POSTROUTING -d 192.168.0.0/24 -j MASQUERADE
+PostUp = iptables -t nat -A POSTROUTING -d 192.168.11.0/24 -j MASQUERADE
 PostDown = /config/iptables_script/postdown.sh
-PostDown = iptables -t nat -D POSTROUTING -d 192.168.0.0/24 -j MASQUERADE
+PostDown = iptables -t nat -D POSTROUTING -d 192.168.11.0/24 -j MASQUERADE
 
 [Peer]
 PublicKey = BCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abcd

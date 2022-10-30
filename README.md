@@ -35,14 +35,15 @@
 
 1. Create several scripts for address translation. See [the README.md](./config/iptables_script/README.md) for details.
 
-## Start
+## Execution
+### Start
 Enter the following command to start the container.
 
 ```sh
 ./wrapper.sh start
 ```
 
-## Stop/Down
+### Stop/Down
 Run the following command.
 
 ```sh
@@ -53,7 +54,7 @@ Run the following command.
 ./wrapper.sh down
 ```
 
-## Check status/log
+### Check status/log
 Execute the following command.
 
 ```sh
@@ -63,6 +64,56 @@ docker-compose ps
 
 # show log
 ./wrapper.sh logs
+```
+
+## Setup other VPN client
+This section describes how to access the LAN from a VPN client via the Internet.
+Here, the VPN client indicated above is a different from this VPN client connected in this container.
+See below for details.
+
+```sh
+ +----------------------------+         +------------+         +-------------------+
+ |      this VPN client       |         |            |         |  the VPN client   |
+ |                            | <-----> | VPN Server | <-----> | (current target)  |
+ | connected in this contaier |         |            |         | ex. iPhone,laptop |
+ +----------------------------+         +------------+         +-------------------+
+```
+
+### Peer configuration file
+An example of a peer configuration file(for the VPN client) is show below.
+
+```yaml
+[Interface]
+Address = 10.1.2.4
+PrivateKey = ABCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abc
+ListenPort = 51820
+MTU = 1380
+DNS = 10.1.2.1,192.168.11.3,www.homenet.local
+
+[Peer]
+PublicKey = BCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abcd
+PresharedKey = CDEfghijklmnOPQRstuvwxyz0123456789=+/*-abcde
+Endpoint = pseudo-imitation.system.server-on.net:58021
+AllowedIPs = 10.1.2.0/24,192.168.11.0/24
+PersistentKeepAlive = 10
+```
+
+The correspondence between the subnet in the LAN, the IP address of the DNS server in the LAN, and the domain name is show below.
+
+|Element|Detail|
+|:----|:----|
+|The subnet in the LAN|192.168.11.0/24|
+|IP address of the DNS server in the LAN|192.168.11.3|
+|domain name|www.homenet.local|
+
+In addition, the following command must be added to `conf.up.d` and `conf.down.d` if a DNS server in the LAN is used.
+
+```sh
+# conf.up.d/02-routing-lan-access.conf
+iptables -t nat -A PREROUTING -p udp --dport 53 -j DNAT --to-destination 192.168.11.3:53
+
+# conf.down.d/02-routing-lan-access.conf
+iptables -t nat -D PREROUTING -p udp --dport 53 -j DNAT --to-destination 192.168.11.3:53
 ```
 
 ## FAQ

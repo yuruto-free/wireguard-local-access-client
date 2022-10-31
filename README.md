@@ -7,9 +7,9 @@
 
     ```sh
     PostUp = /config/iptables_script/postup.sh
-    PostUp = iptables -t nat -A POSTROUTING -d 192.168.0.0/24 -j MASQUERADE
+    PostUp = iptables -t nat -A POSTROUTING -d 192.168.11.0/24 -j MASQUERADE
     PostDown = /config/iptables_script/postdown.sh
-    PostDown = iptables -t nat -D POSTROUTING -d 192.168.0.0/24 -j MASQUERADE
+    PostDown = iptables -t nat -D POSTROUTING -d 192.168.11.0/24 -j MASQUERADE
     ```
 
 1. Update `PUID` and `PGID` in `docker-compose.yml`. These IDs can be obtained by executing the following command.
@@ -60,7 +60,6 @@ Execute the following command.
 ```sh
 # show process status
 ./wrapper.sh ps
-docker-compose ps
 
 # show log
 ./wrapper.sh logs
@@ -88,7 +87,7 @@ Address = 10.1.2.4
 PrivateKey = ABCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abc
 ListenPort = 51820
 MTU = 1380
-DNS = 10.1.2.1,192.168.11.3,www.homenet.local
+DNS = 10.1.2.1,192.168.11.3,homenet.local
 
 [Peer]
 PublicKey = BCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abcd
@@ -104,7 +103,7 @@ The correspondence between the subnet in the LAN, the IP address of the DNS serv
 |:----|:----|
 |The subnet in the LAN|192.168.11.0/24|
 |IP address of the DNS server in the LAN|192.168.11.3|
-|domain name|www.homenet.local|
+|domain name|homenet.local|
 
 In addition, the following command must be added to `conf.up.d` and `conf.down.d` if a DNS server in the LAN is used.
 

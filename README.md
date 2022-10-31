@@ -85,7 +85,7 @@ Address = 10.1.2.4
 PrivateKey = ABCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abc
 ListenPort = 51820
 MTU = 1380
-DNS = 10.1.2.1,192.168.11.3,homenet.local
+DNS = 10.1.2.1,192.168.11.3,www.homenet.local,nas.homenet.local # Add local domains in accordance with your environment.
 
 [Peer]
 PublicKey = BCDEfghijklmnOPQRstuvwxyz0123456789=+/*-abcd
@@ -101,7 +101,7 @@ The correspondence between the subnet in the LAN, the IP address of the DNS serv
 |:----|:----|
 |The subnet in the LAN|192.168.11.0/24|
 |IP address of the DNS server in the LAN|192.168.11.3|
-|domain name|homenet.local|
+|domain name|www.homenet.local,nas.homenet.local|
 
 In addition, the following command must be added to `conf.up.d` and `conf.down.d` if a DNS server in the LAN is used.
 

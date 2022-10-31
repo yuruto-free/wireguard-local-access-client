@@ -7,9 +7,7 @@
 
     ```sh
     PostUp = /config/iptables_script/postup.sh
-    PostUp = iptables -t nat -A POSTROUTING -d 192.168.11.0/24 -j MASQUERADE
     PostDown = /config/iptables_script/postdown.sh
-    PostDown = iptables -t nat -D POSTROUTING -d 192.168.11.0/24 -j MASQUERADE
     ```
 
 1. Update `PUID` and `PGID` in `docker-compose.yml`. These IDs can be obtained by executing the following command.
